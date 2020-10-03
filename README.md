@@ -74,7 +74,7 @@ Open <code>datasource.yml</code> file inside ```grafana/provisioning/datasource`
 
 ### Adding grafana credentials
 
-Add username and password for grafana in <code>monitoring.yml</code> file
+Add username and password for grafana in <code>infra-monitoring.yml</code> file
 ```
       - GF_SECURITY_ADMIN_USER=devops
       - GF_SECURITY_ADMIN_PASSWORD=iamhappytoday
@@ -82,14 +82,14 @@ Add username and password for grafana in <code>monitoring.yml</code> file
 
 #### Running Monitoring stack
 
-Make sure you are in directory which has <code>monitoring.yml</code> and run following commands.
+Make sure you are in directory which has <code>infra-monitoring.yml</code> and run following commands.
 ```
-sudo docker-compose -f monitoring.yml up -d
+sudo docker-compose -f infra-monitoring.yml up -d
 ```
 
 #### Stopping stack
 
-Make sure you are in directory which has <code>monitoring.yml</code> and run following commands.
+Make sure you are in directory which has <code>infra-monitoring.yml</code> and run following commands.
 ```
-sudo docker-compose -f monitoring.yml down
+sudo docker-compose -f infra-monitoring.yml down
 ```
