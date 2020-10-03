@@ -49,7 +49,7 @@ Node Exporter - 9100
 ```
 
 
-#### Clnoe respotitory
+#### Clone respotitory
 
 ```
 git clone https://github.com/pgaijin66/Infrastructure-Monitoring.git
