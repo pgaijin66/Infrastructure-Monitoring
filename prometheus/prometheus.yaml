@@ -32,4 +32,4 @@ global:
 	# - scheme: http
 	#   static_configs:
 	#   - targets: 
-	# 	- 'alertmanager:9093'
+		# - 'DOMAIN_NAME:9093'
