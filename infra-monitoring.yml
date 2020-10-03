@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   prometheus:
     image: prom/prometheus
@@ -6,9 +5,7 @@ services:
     restart: always
     links:
       - cadvisor
-      - nodeexporter
       - grafana
-      - pushgateway
     depends_on:
       - cadvisor
     networks:
@@ -19,24 +16,6 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
     ports:
       - "9090:9090"
-
-  nodeexporter:
-    image: prom/node-exporter:v1.0.1
-    container_name: nodeexporter
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.rootfs=/rootfs'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
-    restart: unless-stopped
-    expose:
-      - "9100:9100"
-    networks:
-      - infra-net
 
   grafana:
     image: grafana/grafana
@@ -49,8 +28,8 @@ services:
       - ./grafana:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
     environment:
-      - GF_SECURITY_ADMIN_USER=XXXXXXX
-      - GF_SECURITY_ADMIN_PASSWORD=XXXXX
+      - GF_SECURITY_ADMIN_USER=XXXX
+      - GF_SECURITY_ADMIN_PASSWORD=XXXX
       - GF_USERS_ALLOW_SIGN_UP=false
     restart: unless-stopped
     networks:
@@ -67,15 +46,6 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
-    networks:
-      - infra-net
-
-  pushgateway:
-    image: prom/pushgateway:v1.2.0
-    container_name: pushgateway
-    restart: unless-stopped
-    expose:
-      - "9093:9093"
     networks:
       - infra-net
 

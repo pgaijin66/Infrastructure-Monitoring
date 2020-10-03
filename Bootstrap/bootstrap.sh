@@ -53,7 +53,17 @@ OS_TYPE=$(cat /etc/os-release | awk -F '=' '/^NAME/{print $2}' | awk '{print $1}
                                 yum install epel-release;
                                 curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose;
                                 chmod +x /usr/local/bin/docker-compose;
-                                docker-compose --version;;
+                                docker-compose --version;
+                                echo "[*] Installing node exporter"
+                                useradd -M -r -s /bin/false node_exporter
+                                wget https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz -P /tmp
+                                cd /tmp && tar xzf node_exporter-0.18.1.linux-amd64.tar.gz
+                                cp node_exporter-0.18.1.linux-amd64/node_exporter /usr/local/bin/
+                                chown node_exporter:node_exporter /usr/local/bin/node_exporter
+                                cp Bootstrap/node_exporter.service /etc/systemd/system/node_exporter.service
+                                systemctl daemon-reload
+                                systemctl enable --now node_exporter.service
+                                systemctl start node_exporter.service
                 darwin*)
                                 echo "[*] OS Detected: $OS_TYPE";
                                 echo "You are on Mac OSX. Just install docker from docker hub.";;
