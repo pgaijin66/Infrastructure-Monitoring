@@ -17,7 +17,7 @@ global:
 	- job_name: 'cadvisor'
 	  scrape_interval: 5s
 	  static_configs:
-		- targets: ['DOMAIN_NAME:8080']
+		- targets: ['DOMAIN_NAME:9092']
 	- job_name: 'prometheus'
 	  scrape_interval: 10s
 	  static_configs:
@@ -26,7 +26,7 @@ global:
 	  scrape_interval: 10s
 	  honor_labels: true
 	  static_configs:
-		- targets: ['DOMAIN_NAME:9091']
+		- targets: ['DOMAIN_NAME:9093']
   alerting:
 	# alertmanagers:
 	# - scheme: http
