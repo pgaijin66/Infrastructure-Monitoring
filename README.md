@@ -66,6 +66,12 @@ sudo chmod +x Bootstrap/bootstrap.sh
 sudo bash Bootstrap/bootstrap.sh
 ```
 
+### Updating host URL in configuration file
+
+Open <code>prometheus.yml</code> file inside prometheus directory and update the DOMAIN_NAME to your respective domain name of IP address.
+
+Open <code>datasource.yml</code> file inside ```grafana/provisioning/datasource``` directory and update the DOMAIN_NAME to your respective domain name of IP address.
+
 ### Adding grafana credentials
 
 Add username and password for grafana in <code>monitoring.yml</code> file

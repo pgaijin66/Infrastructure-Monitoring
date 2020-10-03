@@ -13,23 +13,23 @@ global:
 	- job_name: 'nodeexporter'
 	  scrape_interval: 5s
 	  static_configs:
-		- targets: ['nodeexporter:9100']
+		- targets: ['DOMAIN_NAME:9100']
 	- job_name: 'cadvisor'
 	  scrape_interval: 5s
 	  static_configs:
-		- targets: ['cadvisor:8080']
+		- targets: ['DOMAIN_NAME:8080']
 	- job_name: 'prometheus'
 	  scrape_interval: 10s
 	  static_configs:
-		- targets: ['localhost:9090']
+		- targets: ['DOMAIN_NAME:9090']
 	- job_name: 'pushgateway'
 	  scrape_interval: 10s
 	  honor_labels: true
 	  static_configs:
-		- targets: ['pushgateway:9091']
+		- targets: ['DOMAIN_NAME:9091']
   alerting:
-	alertmanagers:
-	- scheme: http
-	  static_configs:
-	  - targets: 
-		- 'alertmanager:9093'
+	# alertmanagers:
+	# - scheme: http
+	#   static_configs:
+	#   - targets: 
+	# 	- 'alertmanager:9093'
