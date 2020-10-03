@@ -40,6 +40,14 @@ In prometheus ecosystem following things are generally used:
 Prometheus gathers metrics from jobs configured in prometheus configuration and stores all scraped data locally and run rules over this data to either aggregate and record new time series from existing data or generated alerts. Grafana or any other data visualization toolo 
 
 ## Deployment
+```
+Prometheus - 9090
+Grafana - 9091
+cAdvisor - 9092
+Pushgateway - 9093
+Node Exporter - 9100
+```
+
 
 #### Clnoe respotitory
 
@@ -49,19 +57,32 @@ git clone https://github.com/pgaijin66/Infrastructure-Monitoring.git
 
 #### Bootstrapping
 
-If you are working on a new server. First run the bootstrapping script. This is check your operating system and install all the necessary libraries and packages along with docker and docker-compose.
+If you are working on a vanilla server. you might want to run the bootstrapping script. This is check your operating system and install all the necessary libraries and packages along with docker and docker-compose.
+
+If you have already installed docker and docker-compose you can ignore this step.
 ```
 cd Infrastructure-Monitoring
-sudo chmod +x Bootstrap/boostrap.sh
+sudo chmod +x Bootstrap/bootstrap.sh
+sudo bash Bootstrap/bootstrap.sh
+```
+
+### Adding grafana credentials
+
+Add username and password for grafana in <code>monitoring.yml</code> file
+```
+      - GF_SECURITY_ADMIN_USER=devops
+      - GF_SECURITY_ADMIN_PASSWORD=iamhappytoday
 ```
 
 #### Running Monitoring stack
+
 Make sure you are in directory which has <code>monitoring.yml</code> and run following commands.
 ```
 sudo docker-compose -f monitoring.yml up -d
 ```
 
 #### Stopping stack
+
 Make sure you are in directory which has <code>monitoring.yml</code> and run following commands.
 ```
 sudo docker-compose -f monitoring.yml down

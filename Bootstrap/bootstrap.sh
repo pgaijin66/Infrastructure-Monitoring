@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 
-# trap handle_exit 0 SIGHUP SIGINT SIGQUIT SIGABRT SIGTERM
+# Defaults
+trap handle_exit 0 SIGHUP SIGINT SIGQUIT SIGABRT SIGTERM
 set -o errexit
 set -o nounset
 set -o pipefail
 
+# Trap handling
+handle_exit(){
+	echo "** Trapped exit event"
+}
 
 main() {
 	echo "[*] Checking root previlige."
 	if [[ $(id -u) -ne 0 ]] ; then echo "$USER does not has sudo previlige. Please run as root" ; exit 1 ; fi
 
-
+# Checking OS TYPE
 	case "$OSTYPE" in
 		ubuntu*)
 				echo "[*] OS Detected: $OSTYPE";
@@ -49,11 +54,11 @@ main() {
 				docker-compose --version;;
 		darwin*)
 				echo "[*] OS Detected: $OSTYPE";
-				bew install a;
 				echo "You are on Mac OSX. Just install docker from docker hub.";;
 		*)
 				echo "[*] Unknown OS type: $OSTYPE" ;;
 	esac
 }
 
+# Checking whether this is script was imported or is the entry point.
 [[ "$0" == "$BASH_SOURCE" ]] && main "$@"

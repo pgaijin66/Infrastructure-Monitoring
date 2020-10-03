@@ -6,6 +6,9 @@ services:
     restart: always
     links:
       - cadvisor
+      - nodeexporter
+      - grafana
+      - pushgateway
     depends_on:
       - cadvisor
     networks:
