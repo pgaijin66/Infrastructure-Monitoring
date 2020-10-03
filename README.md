@@ -68,9 +68,9 @@ sudo bash Bootstrap/bootstrap.sh
 
 ### Updating host URL in configuration file
 
-Open <code>prometheus.yml</code> file inside prometheus directory and update the DOMAIN_NAME to your respective domain name of IP address.
+Open <code>prometheus.yml</code> file inside prometheus directory and update the IP Address to your server or respective domain name if DNS is configured.
 
-Open <code>datasource.yml</code> file inside ```grafana/provisioning/datasource``` directory and update the DOMAIN_NAME to your respective domain name of IP address.
+Open <code>datasource.yml</code> file inside ```grafana/provisioning/datasource``` directory and u update the IP Address to your server or respective domain name if DNS is configured.
 
 ### Adding grafana credentials
 
