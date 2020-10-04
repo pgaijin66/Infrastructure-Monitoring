@@ -7,6 +7,7 @@ services:
     links:
       - cadvisor
       - grafana
+      - node_exporter
     depends_on:
       - cadvisor
     networks:
@@ -51,6 +52,7 @@ services:
       - infra-net
     node-exporter:
       image: raymondmm/node-exporter
+      container_name: node_exporter
       environment:
         - NODE_ID={{.Node.ID}}
       volumes:
