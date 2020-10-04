@@ -22,7 +22,7 @@ OS_TYPE=$(cat /etc/os-release | awk -F '=' '/^NAME/{print $2}' | awk '{print $1}
                 Ubuntu*)
                                 echo "[*] OS Detected: $OS_TYPE";
                                 echo "[*] Installing required packages"
-                                apt-get install apt-transport-https ca-certificates curl software-properties-common;
+                                apt-get install -y apt-transport-https ca-certificates curl software-properties-common;
                                 echo "[*] Adding docker GPG key to keystore."
                                 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -;
                                 echo "[*] Adding docker to repositories."
