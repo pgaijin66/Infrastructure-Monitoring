@@ -44,7 +44,7 @@ OS_TYPE=$(cat /etc/os-release | awk -F '=' '/^NAME/{print $2}' | awk '{print $1}
                                 cd /tmp && tar xzf node_exporter-0.18.1.linux-amd64.tar.gz;
                                 cp node_exporter-0.18.1.linux-amd64/node_exporter /usr/local/bin/;
                                 chown node_exporter:node_exporter /usr/local/bin/node_exporter;
-                                cp ./Bootstrap/node_exporter.service /etc/systemd/system/;
+                                cp "./Bootstrap/node_exporter.service" "/etc/systemd/system/";
                                 systemctl daemon-reload;
                                 systemctl enable --now node_exporter.service;
                                 systemctl start node_exporter.service;;
@@ -70,7 +70,7 @@ OS_TYPE=$(cat /etc/os-release | awk -F '=' '/^NAME/{print $2}' | awk '{print $1}
                                 cd /tmp && tar xzf node_exporter-0.18.1.linux-amd64.tar.gz;
                                 cp node_exporter-0.18.1.linux-amd64/node_exporter /usr/local/bin/;
                                 chown node_exporter:node_exporter /usr/local/bin/node_exporter;
-                                cp ./Bootstrap/node_exporter.service /etc/systemd/system/;
+                                cp "./Bootstrap/node_exporter.service" "/etc/systemd/system/";
                                 systemctl daemon-reload;
                                 systemctl enable --now node_exporter.service;
                                 systemctl start node_exporter.service;;
