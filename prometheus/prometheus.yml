@@ -1,0 +1,17 @@
+global:
+    scrape_interval: 5s
+    external_labels:
+      monitor: "prometheus_monitor"
+    rule_files:
+    # write rules later
+scrape_configs:
+    - job_name: "prometheus"
+      static_configs:
+      - targets: ["DOMAIN_NAME:9090"]
+    - job_name: "node-exporter"
+      static_configs:
+      - targets: ["DOMAIN_NAME:9100"]
+    - job_name: cadvisor
+      static_configs:
+      - targets:
+        - DOMAIN_NAME:9092

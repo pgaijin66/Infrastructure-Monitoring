@@ -6,12 +6,13 @@ services:
     restart: always
     links:
       - cadvisor
+      - grafana
     depends_on:
       - cadvisor
     networks:
       - infra-net
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus:/etc/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
     ports:
@@ -22,6 +23,8 @@ services:
     container_name: grafana
     restart: always
     user: "0"
+    links:
+      - prometheus
     ports:
       - "9091:3000"
     volumes:
