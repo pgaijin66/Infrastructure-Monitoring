@@ -48,7 +48,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     networks:
       - infra-net
-  node-exporter:
+  node_exporter:
     image: raymondmm/node-exporter
     container_name: node_exporter
     environment:
