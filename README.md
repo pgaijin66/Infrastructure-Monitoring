@@ -57,7 +57,7 @@ git clone https://github.com/pgaijin66/Infrastructure-Monitoring.git
 
 #### Bootstrapping
 
-If you are working on a vanilla server. you might want to run the bootstrapping script. This is check your operating system and install all the necessary libraries and packages along with docker and docker-compose.
+If you are working on a vanilla server. you might want to run the bootstrapping script. This will check your operating system and install all the necessary libraries and packages along with docker and docker-compose.
 
 If you have already installed docker and docker-compose you can ignore this step.
 ```
