@@ -115,7 +115,7 @@ When loggen into Grafana, Do following :
 Now, to add dashboard Click Dashboard > Manage > Import . You can import json file or just write "<b>1860</b>" which is the code for node exporter dashboard.
 
 You can follow this Youtube Link if you are not sure how to add it.
-
+https://www.youtube.com/watch?v=xvKR1rqX74M
 
 #### Stopping stack
 
