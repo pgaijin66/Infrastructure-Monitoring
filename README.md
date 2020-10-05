@@ -81,6 +81,42 @@ Make sure you are in directory which has <code>infra-monitoring.yml</code> and r
 sudo docker-compose -f infra-monitoring.yml up -d
 ```
 
+### Accessing the stack
+NOTE: Make sure you have ports opened in firewall. If this monitoring is cirtical then, make sure you only allow access through VPN.
+
+To access monitoring solutions, You can go to 
+```
+http://<IP_ADDRESS_OF_SERVER>:<PORT>
+```
+
+To access prometheus 
+```
+http://<IP_ADDRESS_OF_SERVER>:9090
+```
+
+To access Grafana 
+```
+http://<IP_ADDRESS_OF_SERVER>:9091
+```
+
+To access Cadvisor 
+```
+http://<IP_ADDRESS_OF_SERVER>:9092
+```
+
+### Configuring  (Adding prometheus and Dashboard)
+
+When loggen into Grafana, Do following :
+1. On bottom left there is a gear icon, click that and click add data source and select prometheus.
+2. Add your prometheus URL
+3. Access: SERVER and leave everything as default.
+4. Click Save and Test.
+
+Now, to add dashboard Click Dashboard > Manage > Import . You can import json file or just write "<b>1860<b>" which is the code for node exporter dashboard.
+
+You can follow this Youtube Link if you are not sure how to add it.
+
+
 #### Stopping stack
 
 Make sure you are in directory which has <code>infra-monitoring.yml</code> and run following commands.
