@@ -112,7 +112,7 @@ When loggen into Grafana, Do following :
 3. Access: SERVER and leave everything as default.
 4. Click Save and Test.
 
-Now, to add dashboard Click Dashboard > Manage > Import . You can import json file or just write "<b>1860<b>" which is the code for node exporter dashboard.
+Now, to add dashboard Click Dashboard > Manage > Import . You can import json file or just write "<b>1860</b>" which is the code for node exporter dashboard.
 
 You can follow this Youtube Link if you are not sure how to add it.
 
