@@ -1,5 +1,32 @@
 version: "3.8"
 services:
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - '6831:6831'
+      - '16686:16686'
+    logging:
+      driver: loki
+      options:
+        loki-url: 'http://localhost:3100/api/prom/push'
+    networks:
+      - infra-net
+  loki:
+    image: grafana/loki:master
+    ports:
+      - '3100:3100'
+    # send Loki traces to Jaeger
+    environment:
+      - JAEGER_AGENT_HOST=jaeger
+      - JAEGER_AGENT_PORT=6831
+      - JAEGER_SAMPLER_TYPE=const
+      - JAEGER_SAMPLER_PARAM=1
+    logging:
+      driver: loki
+      options:
+        loki-url: 'http://localhost:3100/api/prom/push'
+    networks:
+      - infra-net
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -8,17 +35,20 @@ services:
       - cadvisor
       - grafana
       - node_exporter
+    logging:
+      driver: loki
+      options:
+        loki-url: 'http://localhost:3100/api/prom/push'
     depends_on:
       - cadvisor
     networks:
       - infra-net
     volumes:
-      - ./prometheus:/etc/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
     ports:
       - "9090:9090"
-
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -27,14 +57,14 @@ services:
     ports:
       - "9091:3000"
     volumes:
-      - ./grafana/grafana:/var/lib/grafana
+      - ./grafana/datasources/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
     environment:
       - GF_SECURITY_ADMIN_USER=XXXXX
       - GF_SECURITY_ADMIN_PASSWORD=XXXX
       - GF_USERS_ALLOW_SIGN_UP=false
     networks:
       - infra-net
-
   cadvisor:
     image: gcr.io/google-containers/cadvisor:latest
     container_name: cadvisor
