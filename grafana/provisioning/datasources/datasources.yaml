@@ -1,0 +1,16 @@
+apiVersion: 1
+
+deleteDatasources:
+  # - name: filebeat
+
+datasources:
+  - name: prometheus
+    uid: prometheus
+    type: prometheus
+    access: proxy
+    url: http://192.168.1.130:9090
+    jsonData:
+      manageAlerts: true
+      # alertmanagerUid: gdev-alertmanager
+      prometheusType: Prometheus #Cortex | Mimir | Prometheus | Thanos
+      prometheusVersion: 2.41.0

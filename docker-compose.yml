@@ -1,52 +1,26 @@
 version: "3.8"
+volumes:
+  prometheus-data: {}
+  grafana-data: {}
 services:
-  jaeger:
-    image: jaegertracing/all-in-one:latest
-    ports:
-      - '6831:6831'
-      - '16686:16686'
-    logging:
-      driver: loki
-      options:
-        loki-url: 'http://localhost:3100/api/prom/push'
-    networks:
-      - infra-net
-  loki:
-    image: grafana/loki:master
-    ports:
-      - '3100:3100'
-    # send Loki traces to Jaeger
-    environment:
-      - JAEGER_AGENT_HOST=jaeger
-      - JAEGER_AGENT_PORT=6831
-      - JAEGER_SAMPLER_TYPE=const
-      - JAEGER_SAMPLER_PARAM=1
-    logging:
-      driver: loki
-      options:
-        loki-url: 'http://localhost:3100/api/prom/push'
-    networks:
-      - infra-net
   prometheus:
     image: prom/prometheus
     container_name: prometheus
     restart: always
-    links:
-      - cadvisor
-      - grafana
-      - node_exporter
-    logging:
-      driver: loki
-      options:
-        loki-url: 'http://localhost:3100/api/prom/push'
-    depends_on:
-      - cadvisor
     networks:
       - infra-net
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - type: bind
+        source: ./prometheus
+        target: /etc/prometheus
+      - prometheus-data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-lifecycle"
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=31d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - "9090:9090"
   grafana:
@@ -57,25 +31,14 @@ services:
     ports:
       - "9091:3000"
     volumes:
-      - ./grafana/datasources/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
-      - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      - type: bind
+        source: ./grafana/provisioning/datasources
+        target: /etc/grafana/provisioning/datasources
+      - grafana-data:/var/lib/grafana
     environment:
-      - GF_SECURITY_ADMIN_USER=XXXXX
-      - GF_SECURITY_ADMIN_PASSWORD=XXXX
+      - GF_SECURITY_ADMIN_USER=admin # change this default value
+      - GF_SECURITY_ADMIN_PASSWORD=admin # change this default value
       - GF_USERS_ALLOW_SIGN_UP=false
-    networks:
-      - infra-net
-  cadvisor:
-    image: gcr.io/google-containers/cadvisor:latest
-    container_name: cadvisor
-    restart: always
-    ports:
-      - "9092:8080"
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
     networks:
       - infra-net
   node_exporter:
